@@ -3,8 +3,16 @@ import React from 'react';
 import { range } from '../../utils';
 import { checkGuess } from '../../game-helpers';
 
-function Guess({ children = '', answer }) {
+function Guess({ children = '', answer, setWin }) {
+  let wins = [];
   const result = checkGuess(children, answer);
+  if (result) {
+    wins = result.filter((value) => value.status === 'correct');
+  }
+
+  if (wins.length >= 5) {
+    setWin('won');
+  }
 
   return (
     <p className="guess">
